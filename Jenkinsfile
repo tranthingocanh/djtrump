@@ -2,14 +2,10 @@
 
 node {
     try {
-        environment {
+        environment
             PYTHONPATH = '${env.WORKSPACE}/cworg'
-        }
-        stage("Env Variables") {
-            steps {
-                sh "printenv"
-            }
-        }
+        stage 'Env Variables'
+            sh "printenv"
         stage 'Checkout'       
             checkout scm
 
@@ -19,12 +15,11 @@ node {
 
         stage 'Test'
             echo '${PYTHONPATH}'
-            withPythonEnv('/usr/bin/python3.6') {
+            withPythonEnv '/usr/bin/python3.6'
                 sh 'virtualenv env -p python36'
                 sh '. env/bin/activate'
                 sh 'env/bin/pip install -r requirements.txt'
                 sh 'env/bin/python3.6 manage.py test --testrunner=djtrump.tests.test_runners.NoDbTestRunner'
-            }
         stage 'Deploy'
             sh './deployment/deploy_prod.sh'
 
