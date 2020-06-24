@@ -2,8 +2,6 @@
 
 node {
     try {
-        environment
-            PYTHONPATH = '${env.WORKSPACE}/cworg'
         stage 'Env Variables'
             sh "printenv"
         stage 'Checkout'       
@@ -14,7 +12,6 @@ node {
             slackSend color: "warning", message: "Started `${env.JOB_NAME}#${env.BUILD_NUMBER}`\n\n_The changes:_\n${lastChanges}"
 
         stage 'Test'
-            echo PYTHONPATH
             withPythonEnv '/usr/bin/python3.6'
                 sh 'virtualenv env -p python36'
                 sh '. env/bin/activate'
