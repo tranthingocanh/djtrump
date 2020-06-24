@@ -1,8 +1,10 @@
 #!groovy
 
 node {
-
     try {
+        environment {
+            PYTHONPATH = '${env.WORKSPACE}/cworg'
+        }
         stage 'Checkout'       
             checkout scm
 
@@ -11,8 +13,8 @@ node {
             slackSend color: "warning", message: "Started `${env.JOB_NAME}#${env.BUILD_NUMBER}`\n\n_The changes:_\n${lastChanges}"
 
         stage 'Test'
+            echo '${PYTHONPATH}'
             withPythonEnv('/usr/bin/python3.6') {
-                sh 'echo "hello work"'
                 sh 'virtualenv env -p python36'
                 sh '. env/bin/activate'
                 sh 'env/bin/pip install -r requirements.txt'
