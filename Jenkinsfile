@@ -12,7 +12,7 @@ node {
 
         stage 'Test'
             sh 'echo "hello work"'
-            sh 'virtualenv env -p python3.6'
+            sh 'virtualenv --python=/usr/bin/python3.6 python36'
             sh '. env/bin/activate'
             sh 'env/bin/pip install -r requirements.txt'
             sh 'env/bin/python3.6 manage.py test --testrunner=djtrump.tests.test_runners.NoDbTestRunner'
