@@ -11,12 +11,13 @@ node {
             slackSend color: "warning", message: "Started `${env.JOB_NAME}#${env.BUILD_NUMBER}`\n\n_The changes:_\n${lastChanges}"
 
         stage 'Test'
-            sh 'echo "hello work"'
-            sh 'virtualenv env --python=/usr/bin/python3.6 python36'
-            sh '. env/bin/activate'
-            sh 'env/bin/pip install -r requirements.txt'
-            sh 'env/bin/python3.6 manage.py test --testrunner=djtrump.tests.test_runners.NoDbTestRunner'
-
+            withPythonEnv('/usr/bin/python3.6') {
+                sh 'echo "hello work"'
+                sh 'virtualenv env -p python36'
+                sh '. env/bin/activate'
+                sh 'env/bin/pip install -r requirements.txt'
+                sh 'env/bin/python3.6 manage.py test --testrunner=djtrump.tests.test_runners.NoDbTestRunner'
+            }
         stage 'Deploy'
             sh './deployment/deploy_prod.sh'
 
