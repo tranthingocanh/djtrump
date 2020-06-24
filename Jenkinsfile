@@ -5,6 +5,11 @@ node {
         environment {
             PYTHONPATH = '${env.WORKSPACE}/cworg'
         }
+        stage("Env Variables") {
+            steps {
+                sh "printenv"
+            }
+        }
         stage 'Checkout'       
             checkout scm
 
