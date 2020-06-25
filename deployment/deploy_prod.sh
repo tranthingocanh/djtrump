@@ -6,6 +6,5 @@ ssh -tt root@192.168.1.129 <<EOF
   source /opt/envs/djtrump/bin/activate
   pip install -r requirements.txt
   ./manage.py migrate
-  sudo supervisorctl restart djtrump
   exit
 EOF
