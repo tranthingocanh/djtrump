@@ -28,6 +28,8 @@ jobs:
         pip install -r requirements.txt
     - name: Run migrations
       run: python manage.py migrate
+    - name: Run migrations
+      run: python manage.py migrate
     - name: Run tests
       run: python manage.py test --testrunner=djtrump.tests.test_runners.NoDbTestRunner
     - name: Deploy server test
